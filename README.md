@@ -6,7 +6,7 @@ DOI:10.1109/IJCNN64981.2025.11228768
 
 
 ![Stochastic Pruning vs Deterministic pruning](./assets/best_param_det_sto_accuracy_all_comb.png)
-The above image shows different Stochosaticly Pruned models (SP) vs one Deterministicly Pruned model (DP) using Global Magnitude Pruning (GMP). Our simple procedure adds Gaussian Noise (with fixed $\sigma$ for all layers) to the dense model and follows it with a pruning procedure (GMP/LAMP/GRASP). 
+The above image shows different Stochosaticly Pruned models (SP) vs one Deterministicly Pruned model (DP) using Global Magnitude Pruning (GMP) with the parameters for each model and dataset combination (pruning rate and noise level $\sigma$)  in table 1 at the end of this document). Our simple procedure adds Gaussian Noise (with fixed $\sigma$ for all layers) to the dense model and follows it with a pruning procedure (GMP/LAMP/GRASP). 
 We note that this simple procedure enhances the pruned accuracy of models through the reduction of what we call 'Feature Variance Explosion (FVE)', which is a discrepancy in the variance of featuremaps between one layer and another. The next table shows the effect of Stochastic Pruning in the overall FVE.
 ![Feature Variance Explosion table](./assets/FVE_table.png)
 
@@ -85,12 +85,12 @@ bash slurm_SP_fine_tuning_handler.sh
 
 Submits both exp=11 (stochastic) and exp=6 (deterministic) jobs per combination.
 
-### Step 4 — Multi-objective Optuna search for σ and pruning rate (exp 19)
+### Step 4 — Multi-objective Optuna search for σ and pruning rate (exp 4)
 
 > **Note**: the `optuna.create_study` / `study.optimize` block inside
-> `run_pr_sigma_search_MOO_for_cfg()` (exp 19) is commented out in `main.py`.
+> `run_pr_sigma_search_MOO_for_cfg()` (exp 4) is commented out in `main.py`.
 > Uncomment lines ~1686–1707 before running. The equivalent fully-working pattern
-> is in exp 21 (`run_pr_sigma_fine_tuned_search_MOO_for_cfg`).
+> is in exp 5 (`run_pr_sigma_fine_tuned_search_MOO_for_cfg`).
 
 ```bash
 bash slurm_SP_moo_search_handler.sh
@@ -121,7 +121,7 @@ Key CLI arguments (`run_le_Main_with_external_parameters`):
 
 | Flag | Description                                                                                                                                      |
 |------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `-exp` | Experiment number (10=one-shot, 11=fine-tune, 19=MOO search)                                                                                     |
+| `-exp` | Experiment number (1=one-shot, 2=fine-tune, 4=MOO search)                                                                                        |
 | `--architecture` | `resnet18`, `resnet50`, `vgg19`                                                                                                                  |
 | `--dataset` | `cifar10`, `cifar100`                                                                                                                            |
 | `--pruner` | `global`, `lamp`, `erk`, `random`, `grasp`, `synflow`                                                                                            |
@@ -130,21 +130,21 @@ Key CLI arguments (`run_le_Main_with_external_parameters`):
 | `--modeltype` | `alternative` (use `alternate_models/`)                                                                                                          |
 | `--epochs` | Fine-tuning epochs (0 for one-shot, 200 for Table 1 FT)                                                                                          |
 | `--solution` | Path to pretrained dense checkpoint. If omitted, falls back to the hardcoded default path for this dataset/modeltype/architecture in `LeMain()`. |
-| `--sampler` | Optuna sampler: `tpe` or `nsga` (exp 18/19/21 only)                                                                                              |
-| `--trials` | Number of Optuna trials (exp 18/19/21 only)                                                                                                      |
+| `--sampler` | Optuna sampler: `tpe` or `nsga` (exp 3/4/5 only)                                                                                                 |
+| `--trials` | Number of Optuna trials (exp 3/4/5 only)                                                                                                         |
 | `--functions` | Fitness function index: `1` or `2` (exp 3/4/5 only)                                                                                              |
 
 ---
 
 ## Output files
 
-| Location | Contents |
-|----------|----------|
-| `stochastic_pruning_models/` | Saved pruned model checkpoints (`.pth`) |
-| `stochastic_pruning_data/` | Per-layer sigma/PR data files (`.pth`, `.csv`) |
+| Location | Contents                                                              |
+|----------|-----------------------------------------------------------------------|
+| `stochastic_pruning_models/` | Saved pruned model checkpoints (`.pth`)                               |
+| `stochastic_pruning_data/` | Per-layer sigma/PR data files (`.pth`, `.csv`)                        |
 | `trained_models/` | Dense model inputs (written by `train_CIFAR10.py`, read by `main.py`) |
-| `find_pr_sigma_*_database_MOO_*.dep` | Optuna SQLite study files (exp 19/21) |
-| `*.out` / `*.err` | SLURM stdout/stderr logs |
+| `find_pr_sigma_*_database_MOO_*.dep` | Optuna SQLite study files (exp 4/5)                                   |
+| `*.out` / `*.err` | SLURM stdout/stderr logs                                              |
 
 ---
 

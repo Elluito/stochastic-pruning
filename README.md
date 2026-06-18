@@ -1,10 +1,14 @@
 # Stochastic Pruning for Neural Networks
 
-Code for reproducing the experiments from *"Stochastic Pruning for Neural Networks"*,
+This repository reproduces the experiments from [*"Stochastic Pruning for Neural Networks"*](https://doi.org/10.1109/IJCNN64981.2025.11228768),
 published in the Proceedings of the International Joint Conference on Neural Networks
-DOI: 10.1109/IJCNN64981.2025.11228768
+DOI:10.1109/IJCNN64981.2025.11228768
 
----
+
+![Stochastic Pruning vs Deterministic pruning](./assets/best_param_det_sto_accuracy_all_comb.png)
+The above image shows different Stochosaticly Pruned models (SP) vs one Deterministicly Pruned model (DP) using Global Magnitude Pruning (GMP). Our simple procedure adds Gaussian Noise (with fixed $\sigma$ for all layers) to the dense model and follows it with a pruning procedure (GMP/LAMP/GRASP). 
+We note that this simple procedure enhances the pruned accuracy of models through the reduction of what we call 'Feature Variance Explosion (FVE)', which is a discrepancy in the variance of featuremaps between one layer and another. The next table shows the effect of Stochastic Pruning in the overall FVE.
+![Feature Variance Explosion table](./assets/FVE_table.png)
 
 ## Repository structure
 
@@ -33,12 +37,12 @@ stochastic-pruning/
 │
 ├── slurm_train_CIFAR10_handler.sh   # Launch dense-model training jobs (preliminary step)
 ├── slurm_train_CIFAR10_run.sh       # SLURM worker for train_CIFAR10.py
-├── slurm_SP_one_shot_pruning_handler.sh  # Launch exp 10 (one-shot stochastic pruning)
-├── slurm_SP_one_shot_pruning_run.sh      # SLURM worker for exp 10
-├── slurm_SP_fine_tuning_handler.sh  # Launch exp 11 (SP + fine-tune) and exp 6 (det. baseline)
-├── slurm_SP_fine_tuning_run.sh      # SLURM worker for exp 11 / exp 6
-├── slurm_SP_moo_search_handler.sh   # Launch exp 19 (Optuna MOO sigma/PR search)
-└── slurm_SP_moo_search_run.sh       # SLURM worker for exp 19
+├── slurm_SP_one_shot_pruning_handler.sh  # Launch exp 1 (one-shot stochastic pruning)
+├── slurm_SP_one_shot_pruning_run.sh      # SLURM worker for exp 1
+├── slurm_SP_fine_tuning_handler.sh  # Launch exp 2 (SP + fine-tune)
+├── slurm_SP_fine_tuning_run.sh      # SLURM worker for exp 2 
+├── slurm_SP_moo_search_handler.sh   # Launch exp 3 (Optuna MOO sigma/PR search)
+└── slurm_SP_moo_search_run.sh       # SLURM worker for exp 3
 ```
 
 ---
@@ -101,7 +105,7 @@ search can be resumed across jobs.
 
 ```bash
 python main.py \
-  -exp 10 \
+  -exp 1 \
   --architecture resnet18 \
   --dataset cifar10 \
   --pruner global \
@@ -115,20 +119,20 @@ python main.py \
 
 Key CLI arguments (`run_le_Main_with_external_parameters`):
 
-| Flag | Description |
-|------|-------------|
-| `-exp` | Experiment number (10=one-shot, 11=fine-tune, 19=MOO search) |
-| `--architecture` | `resnet18`, `resnet50`, `vgg19` |
-| `--dataset` | `cifar10`, `cifar100` |
-| `--pruner` | `global`, `lamp`, `erk`, `random`, `grasp`, `synflow` |
-| `--sigma` | Gaussian noise std added before pruning |
-| `--pruning_rate` | Fraction of weights to prune (e.g. `0.9` = 90% sparse) |
-| `--modeltype` | `alternative` (use `alternate_models/`) |
-| `--epochs` | Fine-tuning epochs (0 for one-shot, 200 for Table 1 FT) |
+| Flag | Description                                                                                                                                      |
+|------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `-exp` | Experiment number (10=one-shot, 11=fine-tune, 19=MOO search)                                                                                     |
+| `--architecture` | `resnet18`, `resnet50`, `vgg19`                                                                                                                  |
+| `--dataset` | `cifar10`, `cifar100`                                                                                                                            |
+| `--pruner` | `global`, `lamp`, `erk`, `random`, `grasp`, `synflow`                                                                                            |
+| `--sigma` | Gaussian noise std added before pruning                                                                                                          |
+| `--pruning_rate` | Fraction of weights to prune (e.g. `0.9` = 90% sparse)                                                                                           |
+| `--modeltype` | `alternative` (use `alternate_models/`)                                                                                                          |
+| `--epochs` | Fine-tuning epochs (0 for one-shot, 200 for Table 1 FT)                                                                                          |
 | `--solution` | Path to pretrained dense checkpoint. If omitted, falls back to the hardcoded default path for this dataset/modeltype/architecture in `LeMain()`. |
-| `--sampler` | Optuna sampler: `tpe` or `nsga` (exp 18/19/21 only) |
-| `--trials` | Number of Optuna trials (exp 18/19/21 only) |
-| `--functions` | Fitness function index: `1` or `2` (exp 18/19/21 only) |
+| `--sampler` | Optuna sampler: `tpe` or `nsga` (exp 18/19/21 only)                                                                                              |
+| `--trials` | Number of Optuna trials (exp 18/19/21 only)                                                                                                      |
+| `--functions` | Fitness function index: `1` or `2` (exp 3/4/5 only)                                                                                              |
 
 ---
 

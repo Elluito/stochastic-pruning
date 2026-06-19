@@ -14,7 +14,7 @@ functions=$6
 log_sigma=$7
 name=$8
 
-sbatch --nodes=1 --time=48:00:00 --partition=gpu --mail-type=all --mail-user=sclaam@leeds.ac.uk \
+sbatch --nodes=1 --time=48:00:00 --partition=gpu --mail-type=all --mail-user=you@example.com \
   --error="MOO_${name}_${model}_${dataset}_${pruner}_${sampler}_F${functions}.err" --gres=gpu:1 \
   --output="MOO_${name}_${model}_${dataset}_${pruner}_${sampler}_F${functions}.out" \
   --job-name="MOO_${name}_${model}_${dataset}_${pruner}_${sampler}_F${functions}" \

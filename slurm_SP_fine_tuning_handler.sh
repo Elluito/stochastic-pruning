@@ -14,14 +14,14 @@ name=$7
 solution=$8
 
 # Stochastic pruning + fine-tuning (experiment 11)
-sbatch --nodes=1 --time=12:00:00 --array=1-5 --partition=gpu --mail-type=all --mail-user=sclaam@leeds.ac.uk \
+sbatch --nodes=1 --time=12:00:00 --array=1-5 --partition=gpu --mail-type=all --mail-user=you@example.com \
   --error="SP_FT_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}_sto.err" --gres=gpu:1 \
   --output="SP_FT_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}_sto.out" \
   --job-name="SP_FT_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}_sto" \
   slurm_SP_fine_tuning_run.sh 11 "${sigma}" "${pruner}" "${model}" "${dataset}" "${pr}" "alternative" "${epochs}" "${name}" "${solution}"
 
 # Deterministic pruning + fine-tuning baseline (experiment 6)
-sbatch --nodes=1 --time=12:00:00 --partition=gpu --mail-type=all --mail-user=sclaam@leeds.ac.uk \
+sbatch --nodes=1 --time=12:00:00 --partition=gpu --mail-type=all --mail-user=you@example.com \
   --error="DP_FT_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}_det.err" --gres=gpu:1 \
   --output="DP_FT_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}_det.out" \
   --job-name="DP_FT_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}_det" \

@@ -21,9 +21,11 @@
 #   $7  log_sigma: 1 to sample sigma on a log scale, 0 otherwise
 #   $8  name (run identifier used in output file names)
 
-export LD_LIBRARY_PATH=""
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"/users/sclaam/.conda/envs/work/lib"
-export PYTHONPATH="/users/sclaam/.conda/envs/work/lib/python3.9/site-packages"
+# Activate your conda/venv environment before running this script (e.g. via
+# `conda activate <env_name>`). Most clusters set LD_LIBRARY_PATH/PYTHONPATH
+# automatically on activation; override them here only if your cluster requires it, e.g.:
+# export LD_LIBRARY_PATH="/path/to/your/conda/envs/<env_name>/lib:$LD_LIBRARY_PATH"
+# export PYTHONPATH="/path/to/your/conda/envs/<env_name>/lib/python3.9/site-packages"
 
 # NOTE: argparse parses --log_sigma with type=bool, so ANY string (even "False") is truthy.
 # The only reliable way to keep it False is to omit the flag entirely and rely on its default.

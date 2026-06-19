@@ -446,10 +446,7 @@ def unrestricted_fine_tune_measure_flops(pruned_model: nn.Module, dataLoader: to
         file_path = gradient_flow_file_prefix
         file_path += "recordings.csv"
 
-        if Path(gradient_flow_file_prefix).owner() == "sclaam":
-            weights_file_path = "/nobackup/sclaam/" + gradient_flow_file_prefix + "weigths/"
-        if Path(gradient_flow_file_prefix).owner() == "luisaam":
-            weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weigths/"
+        weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weights/"
 
         weights_path = Path(weights_file_path)
         weights_path.mkdir(parents=True)
@@ -600,10 +597,7 @@ def restricted_IMAGENET_fine_tune_ACCELERATOR_measure_flops(pruned_model: nn.Mod
         file_path = gradient_flow_file_prefix
         file_path += "recordings.csv"
 
-        if Path(gradient_flow_file_prefix).owner() == "sclaam":
-            weights_file_path = "/nobackup/sclaam/" + gradient_flow_file_prefix + "weigths/"
-        if Path(gradient_flow_file_prefix).owner() == "luisaam":
-            weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weigths/"
+        weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weights/"
 
         weights_path = Path(weights_file_path)
         weights_path.mkdir(parents=True)
@@ -811,10 +805,7 @@ def restricted_fine_tune_measure_flops_sto_and_deterministic(pruned_model: nn.Mo
     #     file_path = gradient_flow_file_prefix
     #     file_path += "recordings.csv"
     #
-    #     if Path(gradient_flow_file_prefix).owner() == "sclaam":
-    #         weights_file_path = "/nobackup/sclaam/" + gradient_flow_file_prefix + "weigths/"
-    #     if Path(gradient_flow_file_prefix).owner() == "luisaam":
-    #         weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weigths/"
+    #     weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weights/"
     #
     #     weights_path = Path(weights_file_path)
     #     weights_path.mkdir(parents=True)
@@ -998,11 +989,7 @@ def restricted_fine_tune_measure_flops(pruned_model: nn.Module, dataLoader: torc
         file_path = gradient_flow_file_prefix
         file_path += "recordings.csv"
 
-        if Path(gradient_flow_file_prefix).owner() == "sclaam":
-            # weights_file_path = "/nobackup/sclaam/" + gradient_flow_file_prefix + "weigths/"
-            weights_file_path = "/mnt/scratch/sclaam/" + gradient_flow_file_prefix + "weights/"
-        if Path(gradient_flow_file_prefix).owner() == "luisaam":
-            weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weigths/"
+        weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weights/"
 
         weights_path = Path(weights_file_path)
         weights_path.mkdir(parents=True,exist_ok=True)
@@ -1165,10 +1152,7 @@ def restricted_fine_tune_measure_flops_calc_variance(pruned_model: nn.Module, da
         file_path = gradient_flow_file_prefix
         file_path += "recordings.csv"
 
-        if Path(gradient_flow_file_prefix).owner() == "sclaam":
-            weights_file_path = "/nobackup/sclaam/" + gradient_flow_file_prefix + "weigths/"
-        if Path(gradient_flow_file_prefix).owner() == "luisaam":
-            weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weigths/"
+        weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weights/"
 
         weights_path = Path(weights_file_path)
         weights_path.mkdir(parents=True)

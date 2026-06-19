@@ -864,7 +864,7 @@ def run_pr_sigma_search_MOO_for_cfg(cfg, arg):
     # # plt.ylabel("$\sigma$", fontsize=fs * 0.8)
     # # plt.legend()
     # plt.savefig(
-    #     "/home/luisaam/Documents/PhD/IJCNN_2025_stochastic_pruning/figures/pareto_fronts/pareto_front_v3_{}_{}_{}_{}_{}.pdf".format(
+    #     "figures/pareto_fronts/pareto_front_v3_{}_{}_{}_{}_{}.pdf".format(
     #         cfg.architecture, cfg.dataset, sampler, function_string,
     #         one_batch_string), bbox_inches="tight")
     # plt.close()
@@ -940,7 +940,7 @@ def run_pr_sigma_search_MOO_for_cfg(cfg, arg):
     # # plt.ylabel("$\sigma$", fontsize=fs * 0.8)
     # # plt.legend()
     # plt.savefig(
-    #     "/home/luisaam/Documents/PhD/IJCNN_2025_stochastic_pruning/figures/pareto_fronts/pareto_front_with_GF_{}_{}_{}_{}_{}.pdf".format(
+    #     "figures/pareto_fronts/pareto_front_with_GF_{}_{}_{}_{}_{}.pdf".format(
     #         cfg.architecture, cfg.dataset, sampler, function_string,
     #         one_batch_string), bbox_inches="tight")
     # plt.close()
@@ -1150,26 +1150,7 @@ def prune_with_rate(net: torch.nn.Module, amount: typing.Union[int, float], prun
 ######################################################################################################
 def get_cifar_datasets(cfg: omegaconf.DictConfig):
     if cfg.dataset == "cifar10":
-        # data_path = "/nobackup/sclaam/data" if platform.system() != "Windows" else "C:/Users\Luis Alfredo\OneDrive - " \
-        #
-        #                                                                            "University of Leeds\PhD\Datasets\CIFAR10"
-        current_directory = Path().cwd()
-        data_path = "./datasets"
-        if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-            # if os.path.exists("/nobackup/sclaam/data"):
-            #     data_path = "/nobackup/sclaam/data"
-            if os.path.exists("/users/sclaam/"):
-                data_path = " /mnt/scratch/sclaam/data2"
-
-
-        elif "Luis Alfredo" == current_directory.owner() or "Luis Alfredo" in current_directory.__str__():
-            data_path = "C:/Users\Luis Alfredo\OneDrive - University of Leeds\PhD\Datasets\CIFAR10"
-        elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-            data_path = "datasets"
-        elif 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-            data_path = "/jmain02/home/J2AD014/mtc03/lla98-mtc03/datasets"
-        # data_path = "datasets" if platform.system() != "Windows" else "C:/Users\Luis Alfredo\OneDrive - " \
-        #                                                                            "University of Leeds\PhD\Datasets\CIFAR10"
+        data_path = cfg.get("data_folder") or "datasets"
 
         if cfg.pad:
 
@@ -1217,19 +1198,7 @@ def get_cifar_datasets(cfg: omegaconf.DictConfig):
             testset, batch_size=100, shuffle=False, num_workers=cfg.num_workers)
         return trainloader, val_loader, testloader
     if cfg.dataset == "cifar100":
-        current_directory = Path().cwd()
-        data_path = ""
-        if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-            if os.path.exists("/nobackup/sclaam/data"):
-                data_path = "/nobackup/sclaam/data"
-            if os.path.exists("/users/sclaam/"):
-                data_path = " /mnt/scratch/sclaam/data2"
-        elif "luis alfredo" == current_directory.owner() or "luis alfredo" in current_directory.__str__():
-            data_path = "c:/users\luis alfredo\onedrive - university of leeds\phd\datasets\cifar100"
-        elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-            data_path = "datasets"
-        elif 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-            data_path = "/jmain02/home/J2AD014/mtc03/lla98-mtc03/datasets"
+        data_path = cfg.get("data_folder") or "datasets"
 
         # transform_train = transforms.Compose(
         #     [transforms.RandomCrop(32, padding=4), transforms.RandomHorizontalFlip(), transforms.ToTensor(),
@@ -1286,14 +1255,7 @@ def get_datasets(cfg: omegaconf.DictConfig):
     if "cifar" in cfg.dataset:
         return get_cifar_datasets(cfg)
     if "mnist" == cfg.dataset:
-        current_directory = Path().cwd()
-        data_path = ""
-        if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-            data_path = "/nobackup/sclaam/data"
-        elif "Luis Alfredo" == current_directory.owner() or "Luis Alfredo" in current_directory.__str__():
-            data_path = "C:/Users\Luis Alfredo\OneDrive - University of Leeds\PhD\Datasets\MNIST"
-        elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-            data_path = "datasets"
+        data_path = cfg.get("data_folder") or "datasets"
 
         transfos = torchvision.transforms.Compose([
             torchvision.transforms.Grayscale(num_output_channels=3),
@@ -1330,19 +1292,7 @@ def get_datasets(cfg: omegaconf.DictConfig):
         # Excerpt take from https://github.com/pytorch/examples/blob/e0d33a69bec3eb4096c265451dbb85975eb961ea/imagenet/main.py#L113-L126
         # Data loading code
 
-        current_directory = Path().cwd()
-        data_path = ""
-        if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-            if os.path.exists("/nobackup/sclaam/data"):
-                data_path = "/nobackup/sclaam/data"
-            if os.path.exists("/users/sclaam/"):
-                data_path = " /mnt/scratch/sclaam/data2"
-        elif "luis alfredo" == current_directory.owner() or "luis alfredo" in current_directory.__str__():
-            data_path = "c:/users\luis alfredo\onedrive - university of leeds\phd\datasets\mnist"
-        elif 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-            data_path = "/jmain02/home/J2AD014/mtc03/lla98-mtc03/datasets"
-        elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-            data_path = "datasets/"
+        data_path = cfg.get("data_folder") or "datasets"
         traindir = data_path + '/imagenet/' + 'train'
         testdir = data_path + '/imagenet/' + 'val'
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -1416,19 +1366,7 @@ def get_datasets(cfg: omegaconf.DictConfig):
 
     if 'small_imagenet' == cfg.dataset:
 
-        current_directory = Path().cwd()
-        data_path = ""
-        if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-            if os.path.exists("/nobackup/sclaam/data"):
-                data_path = "/nobackup/sclaam/data"
-            if os.path.exists("/users/sclaam/"):
-                data_path = " /mnt/scratch/sclaam/data2"
-        elif "luis alfredo" == current_directory.owner() or "luis alfredo" in current_directory.__str__():
-            data_path = "c:/users\luis alfredo\onedrive - university of leeds\phd\datasets\mnist"
-        elif 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-            data_path = "/jmain02/home/J2AD014/mtc03/lla98-mtc03/datasets"
-        elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-            data_path = "/home/luisaam/Documents/PhD/data"
+        data_path = cfg.get("data_folder") or "datasets"
         from test_imagenet import load_small_imagenet
         trainloader, valloader, testloader = load_small_imagenet(
             {"traindir": data_path + "/small_imagenet/train", "valdir": data_path + "/small_imagenet/val",
@@ -1439,19 +1377,7 @@ def get_datasets(cfg: omegaconf.DictConfig):
 
         from test_imagenet import load_tiny_imagenet
 
-        current_directory = Path().cwd()
-        data_path = ""
-        if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-            if os.path.exists("/nobackup/sclaam/data"):
-                data_path = "/nobackup/sclaam/data"
-            if os.path.exists("/users/sclaam/"):
-                data_path = "/mnt/scratch/sclaam/data2"
-        elif "luis alfredo" == current_directory.owner() or "luis alfredo" in current_directory.__str__():
-            data_path = "c:/users\luis alfredo\onedrive - university of leeds\phd\datasets\mnist"
-        elif 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-            data_path = "/jmain02/home/J2AD014/mtc03/lla98-mtc03/datasets"
-        elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-            data_path = "/home/luisaam/Documents/PhD/data"
+        data_path = cfg.get("data_folder") or "datasets"
         traindir = data_path + '/tiny_imagenet_200/' + 'train'
         testdir = data_path + '/tiny_imagenet_200/' + 'val'
         cfg.traindir = traindir
@@ -1902,11 +1828,7 @@ def run_fine_tune_experiment(cfg: omegaconf.DictConfig):
     gradient_flow_file_prefix = filepath_GF_measure
     weights_file_path = ""
     if gradient_flow_file_prefix != "":
-        if Path(gradient_flow_file_prefix).owner() == "sclaam":
-            # weights_file_path = "/nobackup/sclaam/" + gradient_flow_file_prefix + "weights/"
-            weights_file_path = "/mnt/scratch/sclaam/" + gradient_flow_file_prefix + "weights/"
-        if Path(gradient_flow_file_prefix).owner() == "luisaam":
-            weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weigths/"
+        weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weights/"
         weights_path = Path(weights_file_path)
         weights_path.mkdir(parents=True)
         state_dict = dense_model.state_dict()
@@ -2078,11 +2000,7 @@ def fine_tune_after_stochastic_pruning_experiment(cfg: omegaconf.DictConfig, pri
     weights_file_path = ""
     gradient_flow_file_prefix = filepath_GF_measure
     if gradient_flow_file_prefix != "":
-        if Path(gradient_flow_file_prefix).owner() == "sclaam":
-            # weights_file_path = "/nobackup/sclaam/" + gradient_flow_file_prefix + "weigths/"
-            weights_file_path = "/mnt/scratch/sclaam/" + gradient_flow_file_prefix + "weights/"
-        if Path(gradient_flow_file_prefix).owner() == "luisaam":
-            weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weights/"
+        weights_file_path = "GF_data/" + gradient_flow_file_prefix + "weights/"
         weights_path = Path(weights_file_path)
         weights_path.mkdir(parents=True)
         state_dict = best_dense_model.state_dict()
@@ -2269,7 +2187,7 @@ def LeMain(args):
         if args["modeltype"] == "hub":
 
             if args["architecture"] == "resnet18":
-                solution = "/nobackup/sclaam/trained_models/resnet18_imagenet.pth"
+                solution = "trained_models/imagenet/resnet18_imagenet.pth"
                 exclude_layers = ["conv1", "fc"]
                 # exclude_layers = []
             if args["architecture"] == "VGG19":
@@ -2277,7 +2195,7 @@ def LeMain(args):
                 solution = "trained_models/cifar100/vgg19_cifar100_traditional_train.pth"
                 exclude_layers = ["features.0", "classifier"]
             if args["architecture"] == "resnet50":
-                solution = "/nobackup/sclaam/trained_models/resnet50_imagenet.pth"
+                solution = "trained_models/imagenet/resnet50_imagenet.pth"
                 exclude_layers = ["conv1", "fc"]
 
     # `exclude_layers` is purely structural (depends on architecture/modeltype), so it is always
@@ -2318,7 +2236,8 @@ def LeMain(args):
         "input_resolution": 32,
         "resize": False,
         "use_wandb": False,
-        "name": args["name"]
+        "name": args["name"],
+        "data_folder": args.get("data_folder")
     })
 
     cfg.exclude_layers = exclude_layers
@@ -2368,6 +2287,10 @@ def run_le_Main_with_external_parameters():
                         help='Path to the pretrained dense model checkpoint (the "solution") to prune. '
                              'If omitted, falls back to the default checkpoint path used in the paper for the '
                              'given dataset/modeltype/architecture combination.',
+                        required=False)
+    parser.add_argument('-df', '--data_folder', type=str, default=None,
+                        help='Root directory where the dataset is/will be downloaded. '
+                             'If omitted, falls back to a hardcoded per-machine default path.',
                         required=False)
     # parser.add_argument('-gen', '--generation', type=int, default=10, help='Generations', required=False)
 

@@ -215,7 +215,7 @@ def save_onnx(net, name: str = ""):
     size = [2, 3, 32, 32]
     dummy_input = torch.randn(size)
     torch.onnx.export(net, dummy_input,
-                      f'/home/luisaam/PycharmProjects/sparse_ensemble/onnx_models/onnx_models_{name}.onnx',
+                      f'onnx_models/onnx_models_{name}.onnx',
                       input_names=input_names,
                       output_names=output_names)
 if __name__ == '__main__':

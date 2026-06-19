@@ -14,9 +14,11 @@
 #   $8  data_folder (directory where the CIFAR dataset is/will be downloaded)
 #   $9  name (run identifier used in output file names / checkpoint naming)
 
-export LD_LIBRARY_PATH=""
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"/users/sclaam/.conda/envs/work/lib"
-export PYTHONPATH="/users/sclaam/.conda/envs/work/lib/python3.9/site-packages"
+# Activate your conda/venv environment before running this script (e.g. via
+# `conda activate <env_name>`). Most clusters set LD_LIBRARY_PATH/PYTHONPATH
+# automatically on activation; override them here only if your cluster requires it, e.g.:
+# export LD_LIBRARY_PATH="/path/to/your/conda/envs/<env_name>/lib:$LD_LIBRARY_PATH"
+# export PYTHONPATH="/path/to/your/conda/envs/<env_name>/lib/python3.9/site-packages"
 
 python train_CIFAR10.py --experiment 1 --model "$1" --dataset "$2" --epochs "$3" --batch_size "$4" \
   --lr "$5" --num_workers "$6" --save_folder "$7" --data_folder "$8" --seed_name "$9" --save 1

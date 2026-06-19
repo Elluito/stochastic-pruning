@@ -42,7 +42,16 @@ stochastic-pruning/
 ├── slurm_SP_fine_tuning_handler.sh  # Launch exp 2 (SP + fine-tune)
 ├── slurm_SP_fine_tuning_run.sh      # SLURM worker for exp 2 
 ├── slurm_SP_moo_search_handler.sh   # Launch exp 3 (Optuna MOO sigma/PR search)
-└── slurm_SP_moo_search_run.sh       # SLURM worker for exp 3
+├── slurm_SP_moo_search_run.sh       # SLURM worker for exp 3
+│
+├── local_train_CIFAR10_handler.sh        # Non-SLURM equivalent of slurm_train_CIFAR10_handler.sh
+├── local_train_CIFAR10_run.sh            # Non-SLURM equivalent of slurm_train_CIFAR10_run.sh
+├── local_SP_one_shot_pruning_handler.sh  # Non-SLURM equivalent of slurm_SP_one_shot_pruning_handler.sh
+├── local_SP_one_shot_pruning_run.sh      # Non-SLURM equivalent of slurm_SP_one_shot_pruning_run.sh
+├── local_SP_fine_tuning_handler.sh       # Non-SLURM equivalent of slurm_SP_fine_tuning_handler.sh
+├── local_SP_fine_tuning_run.sh           # Non-SLURM equivalent of slurm_SP_fine_tuning_run.sh
+├── local_SP_moo_search_handler.sh        # Non-SLURM equivalent of slurm_SP_moo_search_handler.sh
+└── local_SP_moo_search_run.sh            # Non-SLURM equivalent of slurm_SP_moo_search_run.sh
 ```
 
 ---
@@ -98,6 +107,30 @@ bash slurm_SP_moo_search_handler.sh
 
 Optuna results are stored in `find_pr_sigma_database_MOO_*.dep` (SQLite) so the
 search can be resumed across jobs.
+
+---
+
+## Running locally (without a SLURM cluster)
+
+Each `slurm_*.sh` pair has a `local_*.sh` counterpart that runs the exact same Python
+commands directly in your current shell, with no `sbatch`/`#SBATCH` dependency. Use these
+if you don't have access to a SLURM cluster. They run jobs sequentially (instead of
+submitting them to a scheduler) and write the same `*.out`/`*.err` log files to the
+current directory. Activate your conda/venv environment first, then run the matching
+handler script in place of its `slurm_*` version:
+
+```bash
+bash local_train_CIFAR10_handler.sh        # Step 1 — train dense models
+bash local_SP_one_shot_pruning_handler.sh  # Step 2 — one-shot stochastic pruning
+bash local_SP_fine_tuning_handler.sh       # Step 3 — fine-tune after pruning + deterministic baseline
+bash local_SP_moo_search_handler.sh        # Step 4 — Optuna MOO sigma/PR search
+```
+
+Each handler loops over the same (model, dataset, sigma, pruning_rate) combinations as
+its SLURM counterpart, calling the matching `local_*_run.sh` worker script directly
+(`bash local_*_run.sh ...`) instead of `sbatch ... slurm_*_run.sh`. Where the SLURM
+version used `--array=1-5` for repeated seeds, the local version runs a `for` loop of 5
+sequential repeats instead.
 
 ---
 

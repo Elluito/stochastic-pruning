@@ -10,7 +10,7 @@ dataset=$2
 epochs=$3
 name=$4
 
-sbatch --nodes=1 --time=24:00:00 --partition=gpu --mail-type=all --mail-user=sclaam@leeds.ac.uk \
+sbatch --nodes=1 --time=24:00:00 --partition=gpu --mail-type=all --mail-user=you@example.com \
   --error="train_${name}_${model}_${dataset}.err" --gres=gpu:1 \
   --output="train_${name}_${model}_${dataset}.out" \
   --job-name="train_${name}_${model}_${dataset}" \

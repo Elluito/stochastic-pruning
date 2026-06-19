@@ -18,9 +18,11 @@
 #   $11 (optional) path to a specific dense "solution" checkpoint to prune; if omitted,
 #       main.py falls back to the paper's default checkpoint for $5/$6/$8
 
-export LD_LIBRARY_PATH=""
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"/users/sclaam/.conda/envs/work/lib"
-export PYTHONPATH="/users/sclaam/.conda/envs/work/lib/python3.9/site-packages"
+# Activate your conda/venv environment before running this script (e.g. via
+# `conda activate <env_name>`). Most clusters set LD_LIBRARY_PATH/PYTHONPATH
+# automatically on activation; override them here only if your cluster requires it, e.g.:
+# export LD_LIBRARY_PATH="/path/to/your/conda/envs/<env_name>/lib:$LD_LIBRARY_PATH"
+# export PYTHONPATH="/path/to/your/conda/envs/<env_name>/lib/python3.9/site-packages"
 
 solution_arg=""
 if [ -n "${11}" ]; then

@@ -689,16 +689,7 @@ def get_flops_for_config(args):
 
     # Data
     print('==> Preparing data..')
-    current_directory = Path().cwd()
-    data_path = "."
-    if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-        data_path = "/nobackup/sclaam/data"
-    elif "Luis Alfredo" == current_directory.owner() or "Luis Alfredo" in current_directory.__str__():
-        data_path = "C:/Users\Luis Alfredo\OneDrive - University of Leeds\PhD\Datasets\CIFAR10"
-    elif 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-        data_path = "/jmain02/home/J2AD014/mtc03/lla98-mtc03/datasets"
-    elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-        data_path = "/home/luisaam/Documents/PhD/data/"
+    data_path = args.data_folder
     print(data_path)
 
     batch_size = args.batch_size
@@ -1011,16 +1002,7 @@ def iterative_RF_experiments(args):
 
     # Data
     print('==> Preparing data..')
-    current_directory = Path().cwd()
-    data_path = "."
-    if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-        data_path = "/nobackup/sclaam/data"
-    elif "Luis Alfredo" == current_directory.owner() or "Luis Alfredo" in current_directory.__str__():
-        data_path = "C:/Users\Luis Alfredo\OneDrive - University of Leeds\PhD\Datasets\CIFAR10"
-    elif 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-        data_path = "/jmain02/home/J2AD014/mtc03/lla98-mtc03/datasets"
-    elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-        data_path = "/home/luisaam/Documents/PhD/data/"
+    data_path = args.data_folder
     print(data_path)
     batch_size = args.batch_size
     if "32" in args.name:
@@ -1271,19 +1253,8 @@ def main(args):
 
     # Data
     print('==> Preparing data..')
-    current_directory = Path().cwd()
 
     data_path = args.data_folder
-
-    # data_path = "."
-    # if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-    #     data_path = "/nobackup/sclaam/data"
-    # elif "Luis Alfredo" == current_directory.owner() or "Luis Alfredo" in current_directory.__str__():
-    #     data_path = "C:/Users\Luis Alfredo\OneDrive - University of Leeds\PhD\Datasets\CIFAR10"
-    # elif 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-    #     data_path = "/jmain02/home/J2AD014/mtc03/lla98-mtc03/datasets"
-    # elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-    #     data_path = "/home/luisaam/Documents/PhD/data/"
     print(data_path)
     batch_size = args.batch_size
     if "32" in args.name:
@@ -1549,11 +1520,11 @@ if __name__ == '__main__':
     parser.add_argument('--seed_name', default="no.name", type=str, help='Type of implementation [normal,official]')
     parser.add_argument('--batch_size', default=128, type=int, help='Batch Size for trainig')
     parser.add_argument('--model', default="resnet18", type=str, help='Architecture of model [resnet18,resnet50]')
-    parser.add_argument('--save_folder', default="/nobackup/sclaam/checkpoints", type=str,
+    parser.add_argument('--save_folder', default="checkpoints", type=str,
                         help='Location to save the models')
-    parser.add_argument('--data_folder', default="/mnt/scratch/sclaam/data2", type=str,
+    parser.add_argument('--data_folder', default="datasets", type=str,
                         help='Location of the datasets', required=False)
-    parser.add_argument('--resume_solution', default="/nobackup/sclaam/checkpoints", type=str,
+    parser.add_argument('--resume_solution', default="checkpoints", type=str,
                         help='Solution from which resume t')
     parser.add_argument('--resume', '-r', action='store_true',
                         help='resume from checkpoint')
@@ -1574,10 +1545,10 @@ if __name__ == '__main__':
 
     parser.add_argument('--ffcv', action='store_true', help='Use FFCV loaders')
     parser.add_argument('--ffcv_train',
-                        default="/jmain02/home/J2AD014/mtc03/lla98-mtc03/small_imagenet_ffcv/train_360_0.5_90.ffcv",
+                        default="datasets/small_imagenet_ffcv/train_360_0.5_90.ffcv",
                         type=str, help='FFCV train dataset')
     parser.add_argument('--ffcv_val',
-                        default="/jmain02/home/J2AD014/mtc03/lla98-mtc03/small_imagenet_ffcv/val_360_0.5_90.ffcv",
+                        default="datasets/small_imagenet_ffcv/val_360_0.5_90.ffcv",
                         type=str, help='FFCV val dataset')
     parser.add_argument('--initial_RF', default=3, type=str, help='Receptive field level')
     parser.add_argument('--first_change_RF', default=5, type=str, help='Second step to reduce receptive field')

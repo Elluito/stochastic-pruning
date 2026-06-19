@@ -12,7 +12,7 @@ pruner=$5
 name=$6
 solution=$7
 
-sbatch --nodes=1 --time=01:00:00 --array=1-5 --partition=gpu --mail-type=all --mail-user=sclaam@leeds.ac.uk \
+sbatch --nodes=1 --time=01:00:00 --array=1-5 --partition=gpu --mail-type=all --mail-user=you@example.com \
   --error="SP_oneshot_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}.err" --gres=gpu:1 \
   --output="SP_oneshot_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}.out" \
   --job-name="SP_oneshot_${name}_${model}_${dataset}_sig_${sigma}_pr_${pr}_${pruner}" \

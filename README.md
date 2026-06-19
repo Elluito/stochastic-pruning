@@ -77,7 +77,7 @@ Checkpoints are saved to `trained_models/{cifar10,cifar100}/`.
 To use existing checkpoints instead, pass them via `--solution` on the command line
 (see *Running experiments manually* below).
 
-### Step 2 — One-shot stochastic pruning (Table 1, exp 10)
+### Step 2 — One-shot stochastic pruning (Table 1, exp 1)
 
 ```bash
 bash slurm_SP_one_shot_pruning_handler.sh
@@ -86,7 +86,7 @@ bash slurm_SP_one_shot_pruning_handler.sh
 Runs `one_shot_static_sigma_stochastic_pruning()` for all 6 model/dataset combinations
 from Table 1 of the paper (5 independent seeds via `--array=1-5`).
 
-### Step 3 — Fine-tune after stochastic pruning (Table 1, exp 11) + deterministic baseline (exp 6)
+### Step 3 — Fine-tune after stochastic pruning (Table 1, exp 2) + deterministic baseline (exp 6)
 
 ```bash
 bash slurm_SP_fine_tuning_handler.sh

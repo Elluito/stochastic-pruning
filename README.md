@@ -96,11 +96,6 @@ Submits both exp=11 (stochastic) and exp=6 (deterministic) jobs per combination.
 
 ### Step 4 — Multi-objective Optuna search for σ and pruning rate (exp 4)
 
-> **Note**: the `optuna.create_study` / `study.optimize` block inside
-> `run_pr_sigma_search_MOO_for_cfg()` (exp 4) is commented out in `main.py`.
-> Uncomment lines ~1686–1707 before running. The equivalent fully-working pattern
-> is in exp 5 (`run_pr_sigma_fine_tuned_search_MOO_for_cfg`).
-
 ```bash
 bash slurm_SP_moo_search_handler.sh
 ```
